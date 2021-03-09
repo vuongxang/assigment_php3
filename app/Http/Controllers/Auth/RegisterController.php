@@ -53,8 +53,13 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ],$messages = [
+            'name.required' => 'Tên không được bỏ trống',
+            'email.email' => 'Email không đúng định dạng',
+            'password.min'=>'Password lớn hơn 8 ký tự'
         ]);
     }
+
 
     /**
      * Create a new user instance after a valid registration.
