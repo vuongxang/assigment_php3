@@ -6,7 +6,7 @@
             <div class="modal-body">
                 <!-- Project Details Go Here-->
                 <h2 class="text-uppercase">{{$model->title}}</h2>
-                <p id="viewNumber">Lượt xem: {{$totalViews+1}}</p>
+                <p id="viewNumber">Lượt xem: {{$totalViews}}</p>
                 <img class="img-fluid d-block mx-auto" src="{{asset($model->image)}}" alt="">
                 <div class="item-intro text-muted">{!!$model->short_desc!!}</div>
                 
@@ -51,6 +51,7 @@
         _token: "{{csrf_token()}}"
     };
     setTimeout(() => {
+        document.querySelector('#viewNumber').innerText = "Lượt xem :"+"{{$totalViews+1}}";
         fetch(increaseViewUrl, {
             method: "POST",
             headers: {

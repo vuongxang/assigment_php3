@@ -15,7 +15,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class PostController extends Controller
 {
     public function index(){
-        $posts = Post::paginate(10);
+        $posts = Post::orderBy('created_at','DESC')->paginate(10);
         $posts->load('category');
         return view('backend.posts.index',compact('posts'));
     }
@@ -37,6 +37,12 @@ class PostController extends Controller
     }
 
     public function destroy($id){
+        $post_views = PostView::where('post_id',$id)->get();
+        if($post_views){
+            foreach($post_views as $item){
+                $item->delete();
+            }
+        }
         Post::destroy($id);
         return redirect(route('post.index'));
     }
