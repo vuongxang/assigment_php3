@@ -10488,3 +10488,6 @@ section#contact form#contactForm :-ms-input-placeholder {
 svg.w-5{
   display: none;
 }
+.login-icon{
+  width: 50px !important;
+}

@@ -47,10 +47,11 @@ class DemoCron extends Command
         $crawler = $client->request('GET', 'https://vnexpress.net/tin-tuc-24h');
         try{
             $crawler->filter('div.list-news-subfolder > article.item-news')->each(function ($node) {
-                $a = $node->filter('h3.title-news a');
+                $a = $node->filter('h3.title-news>a');
                 $img = $node->filter('div.thumb-art img');
                 $src = $img->extract(array('src'));
                 $href = $a->extract(array('href'));
+                var_dump($href);
                 // var_dump($href);
                     $cates = Category::all();
 
@@ -59,9 +60,9 @@ class DemoCron extends Command
                     $title = $crawlerPost->filter('h1.title-detail')->text();
                     $cate_name = $crawlerPost->filter('ul.breadcrumb li')->text();
                     $cate_id = 1;
-                    foreach($cates as $cate){
-                        if(strcmp($cate->name,$cate_name)==0) $cate_id = $cate->id;
-                    }
+                    $cate = Category::where('name','like',"%".$cate_name."%")->first();
+                    if($cate) $cate_id = $cate->id;
+
                     $image = $src[0];
                     $short_desc = $crawlerPost->filter('p.description')->text();
                     $content = $crawlerPost->filter('article.fck_detail')->html();

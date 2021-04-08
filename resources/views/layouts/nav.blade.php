@@ -68,22 +68,24 @@
                     <a class="nav-link js-scroll-trigger" href="{{route('contact')}}">Contact</a>
                 </li>
             </ul>
-            @if (Route::has('login'))
-            <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                @auth
-                <form action="{{route('logout')}}" method="post">
-                    @csrf
-                    <button type="submit" class="btn btn-outline-danger">logout</button>
-                </form>
-                @else
-                    <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
+            <div class="">
+                @if (Route::has('login'))
+                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block d-flex justify-content-center ml-4">
+                    @auth
+                        <form action="{{route('logout')}}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-danger">logout</button>
+                        </form>
+            @else
+                            <a href="{{ route('login') }}" class="text-sm text-gray-700 underline login-icon">Log in</a>
 
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
-                    @endif
-                @endauth
+                        @if (Route::has('register'))
+                                <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+                        @endif
+                    @endauth
+                </div>
+            @endif
             </div>
-        @endif
         </div>
     </div>
 </nav>

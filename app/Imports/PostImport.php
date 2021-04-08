@@ -5,9 +5,12 @@ namespace App\Imports;
 use App\Xxx;
 use Maatwebsite\Excel\Concerns\ToModel;
 use App\Models\Post;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class PostImport implements ToModel
+class PostImport implements ToModel,WithValidation
 {
+    use Importable;
     /**
      * @param array $row
      *
@@ -15,7 +18,7 @@ class PostImport implements ToModel
      */
     public function model(array $row)
     {
-        return new Post([
+        $post = Post::create([
            'title' => $row[1],
            'image' => $row[2], 
            'content' => $row[3], 
@@ -23,5 +26,11 @@ class PostImport implements ToModel
            'author' => $row[5], 
            'cate_id' => $row[6] 
         ]);
+    }
+    public function rules(): array
+    {
+        return [
+            '1' => 'unique:posts,title',
+        ];
     }
 }
